@@ -30,4 +30,3 @@ USER opam-user
 RUN sudo apk add opam
 
 RUN opam init --disable-sandboxing
-RUN opam install -y ocamlfind base
