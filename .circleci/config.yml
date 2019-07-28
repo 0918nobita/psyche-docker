@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: docker:19.03.0
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Login
+          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+      - run:
+          name: Build image
+          command: docker build -t 0918nobita/psyche-docker .
+      - run:
+          name: Push
+          command: docker push 0918nobita/psyche-docker:latest
