@@ -11,8 +11,29 @@ jobs:
           name: Login
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
       - run:
-          name: Build image
-          command: docker build -t 0918nobita/psyche-docker .
+          name: Build base image
+          command: docker build -t base-image .
       - run:
-          name: Push
-          command: docker push 0918nobita/psyche-docker:latest
+          name: Build image for ocaml-4.04.0
+          command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.04.0 .
+          working_directory: 4.04.0
+      - run:
+          name: Build image for ocaml-4.05.0
+          command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.05.0 .
+          working_directory: 4.05.0
+      - run:
+          name: Build image for ocaml-4.06.0
+          command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.06.0 .
+          working_directory: 4.06.0
+      - run:
+          name: Push image for ocaml-4.04.0
+          command: docker push 0918nobita/psyche-docker:for-ocaml-4.04.0
+          working_directory: 4.04.0
+      - run:
+          name: Push image for ocaml-4.05.0
+          command: docker push 0918nobita/psyche-docker:for-ocaml-4.05.0
+          working_directory: 4.05.0
+      - run:
+          name: Push image for ocaml-4.06.0
+          command: docker push 0918nobita/psyche-docker:for-ocaml-4.06.0
+          working_directory: 4.06.0
