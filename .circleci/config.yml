@@ -1,5 +1,12 @@
 version: 2.1
 
+commands:
+  login:
+    steps:
+      - run:
+          name: Login
+          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+
 jobs:
   build:
     docker:
@@ -7,16 +14,14 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Login
-          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+      - login
       - run:
           name: Build base image
           command: docker build -t base-image .
       - run:
-          name: Build image for ocaml-4.04.0
-          command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.04.0 .
-          working_directory: 4.04.0
+          name: Build image for ocaml-4.04.1
+          command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.04.1 .
+          working_directory: 4.04.1
       - run:
           name: Build image for ocaml-4.05.0
           command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.05.0 .
@@ -26,9 +31,9 @@ jobs:
           command: docker build -t 0918nobita/psyche-docker:for-ocaml-4.06.0 .
           working_directory: 4.06.0
       - run:
-          name: Push image for ocaml-4.04.0
-          command: docker push 0918nobita/psyche-docker:for-ocaml-4.04.0
-          working_directory: 4.04.0
+          name: Push image for ocaml-4.04.1
+          command: docker push 0918nobita/psyche-docker:for-ocaml-4.04.1
+          working_directory: 4.04.1
       - run:
           name: Push image for ocaml-4.05.0
           command: docker push 0918nobita/psyche-docker:for-ocaml-4.05.0
